@@ -2,7 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { GoogleAuthProvider  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,6 +25,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const database = getDatabase(app);
+const auth = getAuth(app);
 
 // Función para configurar la escucha en tiempo real en la base de datos
 function configurarEscuchaEnTiempoReal() {
@@ -37,3 +39,12 @@ function configurarEscuchaEnTiempoReal() {
 
 // Llamar a la función para configurar la escucha en tiempo real
 configurarEscuchaEnTiempoReal();
+
+// Verificar si un usuario está autenticado
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('El usuario está autenticado.');
+  } else {
+    console.log('El usuario NO está autenticado.');
+  }
+});
