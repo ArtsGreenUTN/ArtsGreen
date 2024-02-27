@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider,signOut  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { app, auth, analytics, database, provider} from "../controladore/firebase.js";
+import { app, auth, analytics, database, provider} from "../controller/firebase.js";
 
 
 const base =`<div class="row flex-nowrap justify-content-between align-items-center">
@@ -77,17 +77,15 @@ function cerrarSesion() {
 }
 
 // Función para configurar la escucha en tiempo real en la base de datos
-function configurarEscuchaEnTiempoReal() {
-  const dbRef = ref(database, "videos");
+function configurarEscuchaEnTiempoReal(nameUser) {
+  const dbRef = ref(database, "users");
   onValue(dbRef, (snapshot) => {
-    const videos = snapshot.val();
-    console.log("Nuevos cambios en la base de datos:");
-    console.log(videos);
+    const usuarios = snapshot.val();
+    alert("Se dio de alta un nuevo usuario: ", nameUser);
+    console.log(usuarios);
   });
 }
 
-// Llamar a la función para configurar la escucha en tiempo real
-configurarEscuchaEnTiempoReal();
 
  
 function subirUsuario(mail,name,fechaCreate,photo,id){
@@ -106,6 +104,9 @@ const header = document.getElementById('header');
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    if (user.email==='artsgreen2@gmail.com') {
+      configurarEscuchaEnTiempoReal(user.displayName);
+    }
     console.log("Usuario autenticado");
     header.innerHTML=base;
     console.log(user);
@@ -126,4 +127,8 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+var prueba_usuario=document.getElementById('prueba_db');
 
+prueba_usuario.addEventListener('click',()=>{
+  subirUsuario("prueba@gmail.com","usuario de pruebas",new Date(),new Date(),new Date()+new Date())
+})
