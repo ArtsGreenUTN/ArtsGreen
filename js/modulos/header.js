@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { app, auth, analytics, database } from "../controladore/firebase.js";
+import { app, auth, analytics, database, provider} from "../controladore/firebase.js";
 import { session } from "../iniciador/main.js";
 
 const base =`<div class="row flex-nowrap justify-content-between align-items-center">
@@ -101,20 +101,23 @@ function registerWithEmailAndPassword() {
       console.error('Error al registrar una nueva cuenta:', errorMessage);
     });
 }
+// Función para iniciar sesión con Google
 function signInWithGoogle() {
-  const provider = new GoogleAuthProvider();
   signInWithPopup(auth, provider)
-  .then((result) => {
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user;
-  }).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const email = error.customData.email;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-  });
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+      actualizarHeader();
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+    });
 }
+
 // Función para cambiar el contenido del header según el estado de autenticación del usuario
 function actualizarHeader() {
   const header = document.getElementById('header');
@@ -128,8 +131,18 @@ function actualizarHeader() {
     let bloginc=document.getElementById('bloginc');
     let bloging=document.getElementById('bloging');
     let bregister=document.getElementById('bregister');
+    var myModal = new bootstrap.Modal(document.getElementById('login'));
     bloging.addEventListener('click', ()=>{
+      myModal.hide();
       signInWithGoogle();
+    });
+    bloginc.addEventListener('click', ()=>{
+      signInWithEmailAndPassword();
+      myModal.hide();
+    });
+    bregister.addEventListener('click', ()=>{
+      registerWithEmailAndPassword();
+      myModal.hide();
     });
   }
 }
