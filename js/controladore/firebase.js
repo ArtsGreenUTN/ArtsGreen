@@ -27,4 +27,3 @@ export const analytics = getAnalytics(app);
 export const database = getDatabase(app);
 //inicializa Auth
 export const auth = getAuth(app);
-export const provider = new GoogleAuthProvider();
