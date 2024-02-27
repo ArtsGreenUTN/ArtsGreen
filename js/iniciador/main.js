@@ -15,7 +15,7 @@ import {} from "../modulos/muro.js";
 import {} from "../modulos/perfil.js";
 import {} from "../modulos/publicaciones.js";
 
-var session=false;
+var session=false; 
 //funcion para que firebase verifique el uso de una cuenta
 onAuthStateChanged(auth, (user) => {
     if (user) {

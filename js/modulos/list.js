@@ -13,4 +13,4 @@ let base=`<nav class="nav nav-underline justify-content-between">
 <a class="nav-item nav-link link-body-emphasis" href="#">Travel</a>
 </nav>`;
 let list = document.getElementById('list');
-list.innerHTML=base;
+list.innerHTML=base; 

@@ -89,7 +89,7 @@ function configurarEscuchaEnTiempoReal() {
 // Llamar a la función para configurar la escucha en tiempo real
 configurarEscuchaEnTiempoReal();
 
-
+ 
 function subirUsuario(mail,name,fechaCreate,photo,id){
   function writeUserData() {
     set(ref(database, 'users/' + id), {
