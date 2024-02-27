@@ -1,10 +1,9 @@
 // Importar las bibliotecas de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { app, auth, analytics, database } from "../controladore/firebase.js";
-import { session } from "../iniciador/main.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider,signOut  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { app, auth, analytics, database, provider} from "../controladore/firebase.js";
 
 const base =`<div class="row flex-nowrap justify-content-between align-items-center">
   <div class="col-4 pt-1">
@@ -66,17 +65,15 @@ const login =`<div class="row flex-nowrap justify-content-between align-items-ce
 </div>
 </div>
 `;
-
-// Función para iniciar sesión con correo y contraseña
-function signInWithEmailAndPassword() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  
-  auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Autenticación exitosa con correo y contraseña
-      const user = userCredential.user;
-      console.log('Usuario autenticado:', user);
+// Función para iniciar sesión con Google
+function signInWithGoogle() {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+      
+      subirUsuario(user.email,user.displayName,user.metadata.creationTime,user.photoURL,user.reloadUserInfo.localId)
     })
     .catch((error) => {
       // Manejar errores de autenticación con correo y contraseña
@@ -118,24 +115,42 @@ function signInWithGoogle() {
     const credential = GoogleAuthProvider.credentialFromError(error);
   });
 }
-// Función para cambiar el contenido del header según el estado de autenticación del usuario
-function actualizarHeader() {
-  const header = document.getElementById('header');
-  if (session) {
+
+function subirUsuario(mail,name,fechaCreate,photo,id){
+  function writeUserData() {
+    set(ref(database, 'users/' + id), {
+      username: name,
+      email: mail,
+      profile_picture : photo,
+      fecha: fechaCreate
+    });
+  }
+  writeUserData();
+};
+const header = document.getElementById('header');
+// Función para obtener los detalles del usuario
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
     console.log("Usuario autenticado");
-    header.innerHTML = base;
-    let logutg=document.getElementById('logutg');
+    header.innerHTML=base;
+    console.log(user);
+    let logoutg = document.getElementById('logoutg');
+    logoutg.addEventListener('click', () => { 
+      cerrarSesion();
+    });
   } else {
     console.log("Usuario no autenticado");
     header.innerHTML = login;
     let bloginc=document.getElementById('bloginc');
     let bloging=document.getElementById('bloging');
-    let bregister=document.getElementById('bregister');
+    var myModal = new bootstrap.Modal(document.getElementById('login'));
     bloging.addEventListener('click', ()=>{
-      signInWithGoogle();
-    });
+        myModal.hide();
+        signInWithGoogle();
+      
+    })
   }
 }
 
-// Llamar a la función para actualizar el header
-actualizarHeader();
+
