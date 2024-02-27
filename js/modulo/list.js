@@ -6,7 +6,6 @@ let base=`<nav class="nav nav-underline justify-content-between">
 <a class="nav-item nav-link link-body-emphasis" href="#">Papel</a>
 <a class="nav-item nav-link link-body-emphasis" href="#">Materias</a>
 <a class="nav-item nav-link link-body-emphasis" href="#">Bio-degradable</a>
-=======
 <a class="nav-item nav-link link-body-emphasis active" href="#">World</a>
 <a class="nav-item nav-link link-body-emphasis" href="#">U.S.</a>
 <a class="nav-item nav-link link-body-emphasis" href="#">Technology</a>
