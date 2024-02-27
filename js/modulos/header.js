@@ -74,18 +74,13 @@ function cerrarSesion() {
   });
 }
 
-let user_details;
 const header = document.getElementById('header');
 // Función para obtener los detalles del usuario
-function getUserDetails() {
-  return user_details;
-}
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("Usuario autenticado");
     header.innerHTML=base;
-    user_details = user; // Actualiza user_details cuando el usuario esté autenticado
     let logoutg = document.getElementById('logoutg');
     logoutg.addEventListener('click', () => { 
       cerrarSesion();
@@ -99,5 +94,3 @@ onAuthStateChanged(auth, (user) => {
     })
   }
 });
-
-export { getUserDetails };
