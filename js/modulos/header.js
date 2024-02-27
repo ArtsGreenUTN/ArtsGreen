@@ -144,28 +144,6 @@ function actualizarHeader() {
 
 // Llamar a la función para actualizar el header
 actualizarHeader();
-=======
-  <button class="btn btn-sm btn-outline-secondary" href="#" data-bs-toggle="modal" data-bs-target="#login">Iniciar sesión</button>
-  <div class="modal fade" id="login" tabindex="-1" aria-labelledby="login" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Inicio/Registro de cuenta</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <p>Autenticación con Google:</p>
-      <button id="bloging">Iniciar sesión con Google</button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
-</div>`;
-
 // Función para iniciar sesión con Google
 function signInWithGoogle() {
   signInWithPopup(auth, provider)
