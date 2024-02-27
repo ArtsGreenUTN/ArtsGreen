@@ -76,6 +76,18 @@ function cerrarSesion() {
   });
 }
 
+// Función para configurar la escucha en tiempo real en la base de datos
+function configurarEscuchaEnTiempoReal() {
+  const dbRef = ref(database, "videos");
+  onValue(dbRef, (snapshot) => {
+    const videos = snapshot.val();
+    console.log("Nuevos cambios en la base de datos:");
+    console.log(videos);
+  });
+}
+
+// Llamar a la función para configurar la escucha en tiempo real
+configurarEscuchaEnTiempoReal();
 
 
 function subirUsuario(mail,name,fechaCreate,photo,id){
