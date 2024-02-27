@@ -2,9 +2,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider,signOut  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { app, auth, analytics, database, provider} from "../controladore/firebase.js";
-import { session } from "../iniciador/main.js";
+
 
 const base =`<div class="row flex-nowrap justify-content-between align-items-center">
   <div class="col-4 pt-1">
@@ -41,17 +41,6 @@ const login =`<div class="row flex-nowrap justify-content-between align-items-ce
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <p>Autenticación por correo electrónico y contraseña:</p>
-      <input type="email" id="email" placeholder="Correo electrónico"><br>
-      <input type="password" id="password" placeholder="Contraseña"><br>
-      <button id="bloginc">Iniciar sesión</button>
-
-      <p>Registrar correo:</p>
-      <input type="email" id="Remail" placeholder="Correo electrónico"><br>
-      <input type="password" id="Rpassword" placeholder="Contraseña"><br>
-      <input type="password" id="Rpasswordrep" placeholder="Repetir contraseña"><br>
-      <button id="bregister">Registrar</button>
-      
       <p>Autenticación con Google:</p>
       <button id="bloging">Iniciar sesión con Google</button>
       </div>
@@ -64,43 +53,6 @@ const login =`<div class="row flex-nowrap justify-content-between align-items-ce
   </div>
 </div>`;
 
-// Función para iniciar sesión con correo y contraseña
-function signInWithEmailAndPassword() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  
-  auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Autenticación exitosa con correo y contraseña
-      const user = userCredential.user;
-      console.log('Usuario autenticado:', user);
-    })
-    .catch((error) => {
-      // Manejar errores de autenticación con correo y contraseña
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error('Error al autenticar con correo y contraseña:', errorMessage);
-    });
-}
-
-// Función para registrar una nueva cuenta con correo y contraseña
-function registerWithEmailAndPassword() {
-  const email = document.getElementById('Remail').value;
-  const password = document.getElementById('Rpassword').value;
-  
-  auth.createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Registro exitoso de una nueva cuenta con correo y contraseña
-      const user = userCredential.user;
-      console.log('Nueva cuenta registrada:', user);
-    })
-    .catch((error) => {
-      // Manejar errores de registro con correo y contraseña
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error('Error al registrar una nueva cuenta:', errorMessage);
-    });
-}
 // Función para iniciar sesión con Google
 function signInWithGoogle() {
   signInWithPopup(auth, provider)
@@ -108,44 +60,44 @@ function signInWithGoogle() {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-      actualizarHeader();
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      const email = error.customData.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
     });
 }
-
-// Función para cambiar el contenido del header según el estado de autenticación del usuario
-function actualizarHeader() {
-  const header = document.getElementById('header');
-  if (session) {
-    console.log("Usuario autenticado");
-    header.innerHTML = base;
-    let logutg=document.getElementById('logutg');
-  } else {
-    console.log("Usuario no autenticado");
-    header.innerHTML = login;
-    let bloginc=document.getElementById('bloginc');
-    let bloging=document.getElementById('bloging');
-    let bregister=document.getElementById('bregister');
-    var myModal = new bootstrap.Modal(document.getElementById('login'));
-    bloging.addEventListener('click', ()=>{
-      myModal.hide();
-      signInWithGoogle();
-    });
-    bloginc.addEventListener('click', ()=>{
-      signInWithEmailAndPassword();
-      myModal.hide();
-    });
-    bregister.addEventListener('click', ()=>{
-      registerWithEmailAndPassword();
-      myModal.hide();
-    });
-  }
+function cerrarSesion() {
+  console.log('Cerrar Sesion');
+  signOut(auth).then(() => {
+  }).catch((error) => {
+  });
 }
 
-// Llamar a la función para actualizar el header
-actualizarHeader();
+let user_details;
+const header = document.getElementById('header');
+// Función para obtener los detalles del usuario
+function getUserDetails() {
+  return user_details;
+}
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("Usuario autenticado");
+    header.innerHTML=base;
+    user_details = user; // Actualiza user_details cuando el usuario esté autenticado
+    let logoutg = document.getElementById('logoutg');
+    logoutg.addEventListener('click', () => { 
+      cerrarSesion();
+    });
+  } else {
+    console.log("Usuario no autenticado");
+    header.innerHTML=login;
+    let bloging=document.getElementById('bloging');
+    bloging.addEventListener('click', ()=>{
+      signInWithGoogle();
+    })
+  }
+});
+
+export { getUserDetails };
