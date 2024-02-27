@@ -22,10 +22,18 @@
     <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-remote-config-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-performance-compat.js"></script>
+
     <script type="module" src="./js/controladore/firebase.js"></script>
     <script src="./js/iniciador/main.js" type="module"></script>
     <script src="./js/modulos/header.js" type="module"></script>
   
+=======
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="https://www.gstatic.com/firebasejs/init.js?useEmulator=true"></script>
+
     
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
