@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { onAuthStateChanged,signInWithPopup, GoogleAuthProvider   } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import {app,auth,analytics,database} from "../controladore/firebase.js";
+import {app,auth,analytics,database} from "../controller/firebase.js";
 
 
 //variables personalizadas
@@ -15,7 +15,7 @@ import {} from "../modulos/muro.js";
 import {} from "../modulos/perfil.js";
 import {} from "../modulos/publicaciones.js";
 
-var session=false;
+var session=false; 
 //funcion para que firebase verifique el uso de una cuenta
 onAuthStateChanged(auth, (user) => {
     if (user) {
