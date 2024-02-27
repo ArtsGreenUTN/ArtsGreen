@@ -1,7 +1,7 @@
 // Importar las bibliotecas de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider,signOut  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { app, auth, analytics, database, provider} from "../controladore/firebase.js";
 
@@ -60,6 +60,8 @@ function signInWithGoogle() {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
+      
+      subirUsuario(user.email,user.displayName,user.metadata.creationTime,user.photoURL,user.reloadUserInfo.localId)
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -74,6 +76,19 @@ function cerrarSesion() {
   });
 }
 
+
+
+function subirUsuario(mail,name,fechaCreate,photo,id){
+  function writeUserData() {
+    set(ref(database, 'users/' + id), {
+      username: name,
+      email: mail,
+      profile_picture : photo,
+      fecha: fechaCreate
+    });
+  }
+  writeUserData();
+};
 const header = document.getElementById('header');
 // Función para obtener los detalles del usuario
 
@@ -81,6 +96,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("Usuario autenticado");
     header.innerHTML=base;
+    console.log(user);
     let logoutg = document.getElementById('logoutg');
     logoutg.addEventListener('click', () => { 
       cerrarSesion();
@@ -91,6 +107,7 @@ onAuthStateChanged(auth, (user) => {
     let bloging=document.getElementById('bloging');
     bloging.addEventListener('click', ()=>{
       signInWithGoogle();
+      
     })
   }
 });
