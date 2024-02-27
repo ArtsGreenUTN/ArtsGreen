@@ -105,9 +105,13 @@ onAuthStateChanged(auth, (user) => {
     console.log("Usuario no autenticado");
     header.innerHTML=login;
     let bloging=document.getElementById('bloging');
+    var myModal = new bootstrap.Modal(document.getElementById('login'));
     bloging.addEventListener('click', ()=>{
-      signInWithGoogle();
+        myModal.hide();
+        signInWithGoogle();
       
     })
   }
 });
+
+
