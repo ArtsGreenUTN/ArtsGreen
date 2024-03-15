@@ -1,0 +1,10 @@
+.background-image {
+    background-image: url('/images/banner.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 80%;
+  }
+
+.background-image p {
+    color: rgb(0, 0, 0);
+}
