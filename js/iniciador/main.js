@@ -23,5 +23,5 @@ onAuthStateChanged(auth, (user) => {
     } else {
         session=false
     }
-});
+}); 
 export{session}

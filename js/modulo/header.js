@@ -102,7 +102,7 @@ function subirUsuario(mail,name,fechaCreate,photo,id){
 const header = document.getElementById('header');
 // Función para obtener los detalles del usuario
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, (user) => { 
   if (user) {
     if (user.email==='artsgreen2@gmail.com') {
       configurarEscuchaEnTiempoReal(user.displayName);

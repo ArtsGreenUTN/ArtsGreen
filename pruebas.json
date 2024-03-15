@@ -12,7 +12,7 @@
         "descripcion": "Descripción del Video 2",
         "reproducciones": 50,
         "url": "https://ejemplo.com/video2.mp4",
-        "fecha_publicacion": "2024-02-24"
+        "fecha_publicacion": "2024-02-24" 
       },
       "video3": {
         "titulo": "Título del Video 3",
