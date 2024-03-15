@@ -1,0 +1,26 @@
+{
+    "videos": {
+      "video1": {
+        "titulo": "Título del Video 1",
+        "descripcion": "Descripción del Video 1",
+        "reproducciones": 100,
+        "url": "https://ejemplo.com/video1.mp4",
+        "fecha_publicacion": "2024-02-25"
+      },
+      "video2": {
+        "titulo": "Título del Video 2",
+        "descripcion": "Descripción del Video 2",
+        "reproducciones": 50,
+        "url": "https://ejemplo.com/video2.mp4",
+        "fecha_publicacion": "2024-02-24" 
+      },
+      "video3": {
+        "titulo": "Título del Video 3",
+        "descripcion": "Descripción del Video 3",
+        "reproducciones": 200,
+        "url": "https://ejemplo.com/video3.mp4",
+        "fecha_publicacion": "2024-02-23"
+      }
+    }
+  }
+  
