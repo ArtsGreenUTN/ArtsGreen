@@ -1,26 +1,69 @@
 {
-    "videos": {
-      "video1": {
-        "titulo": "Título del Video 1",
-        "descripcion": "Descripción del Video 1",
-        "reproducciones": 100,
-        "url": "https://ejemplo.com/video1.mp4",
-        "fecha_publicacion": "2024-02-25"
+    "usuarios": {
+      "123": {
+        "nombre": "nombre",
+        "email": "mail.com",
+        "fotoPerfil": "saodfjnuifdna",
+        "publicaciones": {
+          "123": {
+            "fecha_publicacion": "fecha_publicacion",
+            "comentarios": {
+              "123": {
+                "descripcion": "descripcion",
+                "usuario_comento": "usuario_comento",
+                "fecha_comentario": "fecha_comentario"
+              }
+            }
+          }
+        }
+      }
+    },
+    "usuarios_internos": {
+      "123director": {
+        "estatus_membresia": "estatus_memb",
+        "fecha_inicio": "fecha_inicio",
+        "fecha_termino": "fecha_termino",
+        "profesores": {
+          "nombre": "username",
+          "contrasena": "pass",
+          "correoElectronico": "user@domain.com",
+          "asignatura": "Ciencias",
+          "grupos": {
+            "ABCD": {
+              "id_bucked": "sadnoñuiasdn",
+              "usuarios": {
+                "098765": {
+                  "nombre": "nombre",
+                  "contrasena": "pass",
+                  "promedio": "4.5",
+                  "calificaciones": {
+                    "actividad1": "9.8",
+                    "actividad2": "9.8",
+                    "actividad3": "9.8",
+                    "actividad4": "9.8"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "membresias" :{
+      "mem1":{
+        "nombre":"nombre",
+        "costo":"costo",
+        "duración":"duración"
       },
-      "video2": {
-        "titulo": "Título del Video 2",
-        "descripcion": "Descripción del Video 2",
-        "reproducciones": 50,
-        "url": "https://ejemplo.com/video2.mp4",
-        "fecha_publicacion": "2024-02-24" 
+      "mem2":{
+        "nombre":"nombre",
+        "costo":"costo",
+        "duración":"duración"
       },
-      "video3": {
-        "titulo": "Título del Video 3",
-        "descripcion": "Descripción del Video 3",
-        "reproducciones": 200,
-        "url": "https://ejemplo.com/video3.mp4",
-        "fecha_publicacion": "2024-02-23"
+      "mem3":{
+        "nombre":"nombre",
+        "costo":"costo",
+        "duración":"duración"
       }
     }
   }
-  

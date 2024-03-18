@@ -11,7 +11,7 @@ const base =`<div class="row flex-nowrap justify-content-between align-items-cen
     <a class="link-secondary" href="#">Subscribe</a>
   </div>
   <div class="col-4 text-center">
-    <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">ArtsGreen</a>
+    <a class="blog-header-logo text-body-emphasis text-decoration-none" href="index.html">ArtsGreen</a>
   </div>
   <div class="col-4 d-flex justify-content-end align-items-center">
     <a class="link-secondary" href="#" aria-label="Search">
@@ -81,24 +81,41 @@ function configurarEscuchaEnTiempoReal(nameUser) {
   const dbRef = ref(database, "users");
   onValue(dbRef, (snapshot) => {
     const usuarios = snapshot.val();
-    alert("Se dio de alta un nuevo usuario: ", nameUser);
-    console.log(usuarios);
+    //alert("Se dio de alta un nuevo usuario: ", nameUser);
+    //console.log(usuarios);
   });
 }
 
 
  
-function subirUsuario(mail,name,fechaCreate,photo,id){
-  function writeUserData() {
-    set(ref(database, 'users/' + id), {
-      username: name,
-      email: mail,
-      profile_picture : photo,
-      fecha: fechaCreate
-    });
+async function subirUsuario(mail, name, fechaCreate, photo, id) {
+  async function writeUserData() {
+      if (await existeUsuario(id)) {
+          // El usuario ya existe, realiza la lógica necesaria si es necesario
+      } else {
+          // El usuario no existe, realiza la operación de escritura en la base de datos
+          await set(ref(database, 'usuarios/' + id), {
+              username: name,
+              email: mail,
+              profile_picture: photo,
+              fecha: fechaCreate
+          });
+      }
   }
-  writeUserData();
-};
+
+  async function existeUsuario(id) {
+      try {
+          const snapshot = await get(ref(database, 'usuarios/' + id));
+          return snapshot.exists();
+      } catch (error) {
+          console.error('Error al verificar si existe el usuario:', error);
+          return false;
+      }
+  }
+
+  await writeUserData(); // Llama a la función principal dentro de subirUsuario
+}
+
 const header = document.getElementById('header');
 // Función para obtener los detalles del usuario
 
@@ -109,7 +126,7 @@ onAuthStateChanged(auth, (user) => {
     }
     console.log("Usuario autenticado");
     header.innerHTML=base;
-    console.log(user);
+    //console.log(user);
     let logoutg = document.getElementById('logoutg');
     logoutg.addEventListener('click', () => { 
       cerrarSesion();
@@ -127,8 +144,11 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-var prueba_usuario=document.getElementById('prueba_db');
-
-prueba_usuario.addEventListener('click',()=>{
-  subirUsuario("prueba@gmail.com","usuario de pruebas",new Date(),new Date(),new Date()+new Date())
-})
+var prueba_usuario = document.getElementById('prueba_db');
+if (prueba_usuario != null) {
+  prueba_usuario.addEventListener('click', () => {
+    subirUsuario("prueba@gmail.com", "usuario de pruebas", new Date(), new Date(), new Date() + new Date());
+  });
+} else {
+  console.log("Elemento no encontrado");
+}
