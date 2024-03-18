@@ -25,17 +25,12 @@
     <script type="module" src="./js/controller/firebase.js"></script>
     <script src="./js/iniciador/main.js" type="module"></script>
     <script src="./js/modulo/header.js" type="module"></script> 
+    <script src="./js/modulo/perfil.js" type="module"></script>
+    <script src="./js/modulo/subirPublicacion.js"  type="module"></script>
     <script src="./js/operedor/bd.js"  type="module"></script>
     <script src="./js/operedor/codificador.js"  type="module"></script>
-  <!--      
-    <script src="./js/modulo/header.js" type="module"></script>
-    <script src="./js/operedor/bd.js"  type="module"></script>     
-      <script type="module" src="./js/operadores/login.js"></script> -->
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-   <!--  <script defer src="https://www.gstatic.com/firebasejs/init.js?useEmulator=true"></script> -->
+
+    <!-- <script src="./js/operedor/codificador.js"  type="module"></script> -->
     
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
@@ -127,236 +122,78 @@
   </div>
 </div>
 <main class="container">
-  <div class="background-image p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
-    <div class="col-lg-6 px-0">
-      <h1 class="display-4 fst-italic">Únete a la creatividad ecológica</h1>
-      <button id="prueba_db">Probar con usuario fantasma</button>
-      <p class="lead my-3">
-        ¡Únete a nuestra creatividad ecológica con manualidades reciclables! Transformemos juntos objetos cotidianos en obras de arte que cuiden nuestro planeta. Cada cartón, botella o papel puede convertirse en una nueva historia de sustentabilidad. ¡Súmate y hagamos del reciclaje una forma de expresión!
-      </p>
-    </div>
-  </div>
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary-emphasis">Tip</strong>
-          <h3 class="mb-0">Macetas de Botellas de Plástico</h3>
-          <div class="mb-1 text-body-secondary">Diciembre 12</div>
-          <p class="card-text mb-auto">Corta botellas de plástico, decóralas y úsalas como macetas para plantas.</p>
-          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-            Continuar leyendo
-            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-          </a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <title>Placeholder</title>
-            <image xlink:href="/images/maceta_papel.jpg" width="100%" height="100%" />
-          </svg>  
+    <div class="background-image  p-3 p-md-6 mb-6 rounded text-body-emphasis bg-body-secondary">
+        <div class="col-lg-6 px-0">
+            <div class="container" >
+              <img src="" class="rounded " alt="..." id="imagenPerfil">
+            </div>
+          <div class="container">
+            <h5 class="display-6 fst-italic">Nombre: <span id="nombreUsuairo"></span> </h5>
+            <h5 class="display-6 fst-italic">Correo: <span id="nombreCorreo"></span> </h5>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success-emphasis">Tip</strong>
-          <h3 class="mb-0">Lámparas de Papel</h3>
-          <div class="mb-1 text-body-secondary">Enero 11</div>
-          <p class="mb-auto">Enrolla tiras de periódico para crear una pantalla y añade una luz LED adentro para una lámpara única.</p>
-          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-            Continuar leyendo
-            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-          </a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <title>Placeholder</title>
-            <image xlink:href="/images/lampara_papel.jpg" width="100%" height="100%" />
-          </svg>
-            
-        </div>
+      
+  <div class="row mb-2 p2">
+    <h4>Publicaciones</h4>
+    <div class="container">
+      <button type="button" class="btn btn-primary boton_accion" data-bs-toggle="modal" data-bs-target="#nueva_publicacion">
+          Nueva Publicación
+      </button>
+  </div>
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id="alertaEliminacion" style="display: none;">
+    Se ha eliminado con éxito.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div class="modal fade" id="nueva_publicacion" tabindex="-1" aria-labelledby="nueva_publicacion" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5">Nueva Publicación</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form class="row g-6" id="subirPublicacion">
+                      <div class="col-md-12">
+                          <label for="titulo" class="form-label">Título</label>
+                          <input type="text" class="form-control" id="titulo">
+                      </div>
+                      <div class="col-md-12">
+                          <label for="descripcion" class="form-label">Descripción</label>
+                          <textarea class="form-control" id="descripcion" rows="3" placeholder="Introduce una descripción"></textarea>
+                      </div>
+                      <div class="col-md-12">
+                          <label for="materiales" class="form-label">Materiales</label>
+                          <textarea class="form-control" id="materiales" rows="3" placeholder="Introduce los materiales"></textarea>
+                      </div>
+                      <div class="input-group mb-3">
+                          <label class="input-group-text" for="video">Subir video</label>
+                          <input type="file" class="form-control" id="video">
+                      </div>
+                      <div class="col-12">
+                          <button type="submit" class="btn btn-primary">Subir Publicación</button>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <div id="spinner" style="display: none;">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+              </div>
+          </div>
       </div>
-    </div>
+  </div>
+  
+  </div>
+  
   </div>
 
-  <div class="row g-5">
-    <div class="col-md-8">
-      <h3 class="pb-4 mb-4 fst-italic border-bottom">
-        Block
-      </h3>
-
-      <article class="blog-post">
-        <h2 class="display-5 link-body-emphasis mb-1">Algunas cosas que debes saber</h2>
-        <p class="blog-post-meta">Enero 20, 2023 by <a href="#">Angel</a></p>
-
-        <p>¡Bienvenido a nuestra plataforma de tutoriales de manualidades con materiales reciclables para escuelas primarias y secundarias! En nuestro sitio web, nos enfocamos en ofrecer una amplia gama de proyectos creativos y ecológicos que pueden ser implementados tanto en escuelas privadas como públicas, con especial atención en las privadas. Lo que nos hace únicos es que todos nuestros tutoriales son subidos por los mismos padres de familia, lo que garantiza una diversidad de ideas y enfoques. Desde macetas hechas con botellas de plástico hasta lámparas elaboradas con periódicos reciclados, nuestra comunidad de padres está constantemente compartiendo su creatividad para inspirar y educar a los estudiantes sobre la importancia del reciclaje y la reutilización de materiales. Únete a nosotros para fomentar la creatividad, el cuidado del medio ambiente y el trabajo en comunidad en las aulas. ¡Explora, crea y haz del mundo un lugar mejor con nosotros!</p>
-        <hr>
-        <!--
-        <h2>Inline HTML elements</h2>
-        <p>HTML defines a long list of available inline tags, a complete list of which can be found on the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">Mozilla Developer Network</a>.</p>
-        <ul>
-          <li><strong>To bold text</strong>, use <code class="language-plaintext highlighter-rouge">&lt;strong&gt;</code>.</li>
-          <li><em>To italicize text</em>, use <code class="language-plaintext highlighter-rouge">&lt;em&gt;</code>.</li>
-          <li>Abbreviations, like <abbr title="HyperText Markup Language">HTML</abbr> should use <code class="language-plaintext highlighter-rouge">&lt;abbr&gt;</code>, with an optional <code class="language-plaintext highlighter-rouge">title</code> attribute for the full phrase.</li>
-          <li>Citations, like <cite>— Mark Otto</cite>, should use <code class="language-plaintext highlighter-rouge">&lt;cite&gt;</code>.</li>
-          <li><del>Deleted</del> text should use <code class="language-plaintext highlighter-rouge">&lt;del&gt;</code> and <ins>inserted</ins> text should use <code class="language-plaintext highlighter-rouge">&lt;ins&gt;</code>.</li>
-          <li>Superscript <sup>text</sup> uses <code class="language-plaintext highlighter-rouge">&lt;sup&gt;</code> and subscript <sub>text</sub> uses <code class="language-plaintext highlighter-rouge">&lt;sub&gt;</code>.</li>
-        </ul>
-        <p>Most of these elements are styled by browsers with few modifications on our part.</p>
-        <h2>Heading</h2>
-        <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-        <h3>Sub-heading</h3>
-        <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-        <pre><code>Example code block</code></pre>
-        <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly repetitive body text used throughout.</p>
-      </article>
-
-      <article class="blog-post">
-        <h2 class="display-5 link-body-emphasis mb-1">Another blog post</h2>
-        <p class="blog-post-meta">December 23, 2020 by <a href="#">Jacob</a></p>
-
-        <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-        <blockquote>
-          <p>Longer quote goes here, maybe with some <strong>emphasized text</strong> in the middle of it.</p>
-        </blockquote>
-        <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-        <h3>Example table</h3>
-        <p>And don't forget about tables in these posts:</p>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Upvotes</th>
-              <th>Downvotes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Alice</td>
-              <td>10</td>
-              <td>11</td>
-            </tr>
-            <tr>
-              <td>Bob</td>
-              <td>4</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>Charlie</td>
-              <td>7</td>
-              <td>9</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td>Totals</td>
-              <td>21</td>
-              <td>23</td>
-            </tr>
-          </tfoot>
-        </table>
-
-        <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly repetitive body text used throughout.</p>
-      </article>
-
-      <article class="blog-post">
-        <h2 class="display-5 link-body-emphasis mb-1">New feature</h2>
-        <p class="blog-post-meta">December 14, 2020 by <a href="#">Chris</a></p>
-
-        <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-        <ul>
-          <li>First list item</li>
-          <li>Second list item with a longer description</li>
-          <li>Third list item to close it out</li>
-        </ul>
-        <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly repetitive body text used throughout.</p>
-      </article>-->
-
-      <nav class="blog-pagination" aria-label="Pagination">
-        <a class="btn btn-outline-primary rounded-pill" href="#">Ver videos</a>
-        <a class="btn btn-outline-secondary rounded-pill disabled" aria-disabled="true">Crear uno</a>
-      </nav>
-
-    </div>
-
-    <div class="col-md-4">
-      <div class="position-sticky" style="top: 2rem;">
-        <div class="p-4 mb-3 bg-body-tertiary rounded">
-          <h4 class="fst-italic">Acerca de nosotros</h4>
-          <p class="mb-0">En ArtsGreen, nos dedicamos a inspirar la creatividad y la conciencia ambiental en las escuelas primarias y secundarias, tanto públicas como privadas. Nuestra comunidad de padres comparte tutoriales prácticos de manualidades con materiales reciclables, promoviendo la innovación y el cuidado del medio ambiente en el aula. Únete a nosotros para explorar, crear y hacer del mundo un lugar más creativo y sostenible.</p>
-        </div>
-
-        <div>
-          <h4 class="fst-italic">Videos recientes</h4>
-          <ul class="list-unstyled">
-            <li>
-              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                <svg class="bd-placeholder-img" width="100%" height="96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <image xlink:href="/images/colgante.jpg" width="100%" height="100%" />
-                </svg>
-                
-                <div class="col-lg-8">
-                  <h6 class="mb-0">Colgante de latas</h6>
-                  <small class="text-body-secondary">January 15, 2024</small>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                <svg class="bd-placeholder-img" width="100%" height="96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <image xlink:href="/images/monster.jpg" width="100%" height="100%" />
-                </svg>
-                <div class="col-lg-8">
-                  <h6 class="mb-0">Alcancias con latas de monsters</h6>
-                  <small class="text-body-secondary">January 14, 2024</small>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                <svg class="bd-placeholder-img" width="100%" height="96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <image xlink:href="/images/comdedor.jpg" width="100%" height="100%" />
-                </svg>
-                <div class="col-lg-8">
-                  <h6 class="mb-0">Comedor de latas de pintura para perritos</h6>
-                  <small class="text-body-secondary">January 13, 2024</small>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <!--<div class="p-4">
-          <h4 class="fst-italic">Archives</h4>
-          <ol class="list-unstyled mb-0">
-            <li><a href="#">March 2021</a></li>
-            <li><a href="#">February 2021</a></li>
-            <li><a href="#">January 2021</a></li>
-            <li><a href="#">December 2020</a></li>
-            <li><a href="#">November 2020</a></li>
-            <li><a href="#">October 2020</a></li>
-            <li><a href="#">September 2020</a></li>
-            <li><a href="#">August 2020</a></li>
-            <li><a href="#">July 2020</a></li>
-            <li><a href="#">June 2020</a></li>
-            <li><a href="#">May 2020</a></li>
-            <li><a href="#">April 2020</a></li>
-          </ol>
-        </div>
-
-        <div class="p-4">
-          <h4 class="fst-italic">Elsewhere</h4>
-          <ol class="list-unstyled">
-            <li><a href="#">GitHub</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Facebook</a></li>
-          </ol>
-        </div>
-      </div>-->
-    </div>
+  <div class="row mb-2" id="publicaciones_list">
+    
   </div>
-
 </main>
 
 <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
@@ -366,12 +203,6 @@
   </p>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<!-- 
-<script src="./js/modulos/list.js" type="module"></script>
-<script src="./js/modulos/muro.js" type="module"></script>
-<script src="./js/modulos/perfil.js" type="module"></script>
-<script src="./js/modulos/publicaciones.js" type="module"></script>
-<script src="./js/modulos/footer.js" type="module"></script> -->
 
     </body>
 </html>

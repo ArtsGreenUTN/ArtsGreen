@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getStorage, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 import { getAuth, onAuthStateChanged,GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -28,4 +29,4 @@ export const database = getDatabase(app);
 //inicializa Auth
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
-
+export const storage = getStorage(app);
