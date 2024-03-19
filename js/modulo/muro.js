@@ -50,29 +50,34 @@ async function listaPub(publi) {
         try {
             const videoUrl = await obtenerURLVideo(element.archivoUrl);
             listap.innerHTML += `
-                <div class="card text-center publicacion">
-                    <div class="card-header">
-                        <h3>${element.titulo}</h3>
-                        <div>
-                        <button type="button" class="btn btn-outline-warning editar-btn" data-publicacion-id="${element.usuario,element.id}" ${element.verificar}>Editar</button>
-                        <button type="button" class="btn btn-outline-danger eliminar-btn" data-publicacion-id="${'usuarios/'+element.usuario+'/publicaciones/'+element.id}" ${element.verificar}>Eliminar</button>
-                    </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="videoPlayer">
-                            <video controls id="videoElement" width="auto" height="100%" src="${videoUrl}">
-                                Tu navegador no admite la reproducción de videos.
-                            </video>
-                        </div>
-                        <h5>Descripoción</h5>
-                        <p class="card-text">${element.descripcion}</p>
-                        <h5>Materiales</h5>
-                        <p class="card-text">${element.materiales}</p>
-                    </div>
-                    <div class="card-footer text-body-secondary">
-                        ${element.fecha_subida}
+            <div class="card publicacion">
+            <div class="card-header">
+                <h3>${element.titulo}</h3>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-outline-warning editar-btn" data-publicacion-id="${element.usuario,element.id}" ${element.verificar}>Editar</button>
+                    <button type="button" class="btn btn-outline-danger eliminar-btn" data-publicacion-id="${'usuarios/'+element.usuario+'/publicaciones/'+element.id}" ${element.verificar}>Eliminar</button>
+                </div>
+            </div>
+            <div class="card-body row">
+                <div class="col-md-6">
+                    <div id="videoPlayer">
+                        <video controls id="videoElement" class="w-100" src="${videoUrl}">
+                            Tu navegador no admite la reproducción de videos.
+                        </video>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <h5>Descripción</h5>
+                    <p class="card-text">${element.descripcion}</p>
+                    <h5>Materiales</h5>
+                    <p class="card-text">${element.materiales}</p>
+                </div>
+            </div>
+            <div class="card-footer text-body-secondary">
+                ${element.fecha_subida}
+            </div>
+        </div>
+        
             `;
             publicaciones = [];
             
